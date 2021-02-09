@@ -44,7 +44,7 @@ script:
   - cd z88dk && ./build.sh -e -t
 
 before_deploy:
-  - tar -czf /tmp/z88dk-${TRAVIS_TAG}.tar.gz ./z88dk
+  - tar -czf /tmp/z88dk-${TRAVIS_TAG}.tar.gz .
 
 deploy:
   provider: releases
@@ -53,7 +53,7 @@ deploy:
   on:
     tags: true
   api-key:
-    secure: "guy/dCA9ptTDinZX0BuPJEE+/8YutsBins1J4k9ghc3/KuRRRBXdq85xJeQFXX9+7xYdSyYgTM9/tOHLTSZ4mUDlu/YdrnnyMMPS23rFvwOPIV0sWdp/vAN216oK0VsjOXn54CPRzE8LcdcQJYNDc8f6XQlBbzMIjfcCPANioNoRHi+9vkdlcIeokB/qIsg+N7SUv4Wcw1dn5WsbLsUrhnWpdoqzLM1ZuHRiYMp+HBIT4VRBC2qO38F2S2VSXKf4+6wo8TOmA0oMeqkQN52Fp/ZTgfxv2bJ3VOPiAFdCXpJCk86ZbLeMixlTcmzHJIKrB/va3IHzxuJjUbjq+Fgcg/MqIbGFjIqJm9F/yuibRjMvSzjcAltZBeLZKGCx7A01VpsERzSUcj+NkSaarA4gtT2ctEwNnv4BnyV2B74+nNraIHsmx8fzvrr709oFIBfKN+/P2Fs/e2lFiQZ3D7lZRBuYYfeIOFpZxHQnvImzJr8HzU6bD25Ee5E7tBkwE27+OPeZn9vxGAzrqnBIEp2R6W0PMol4I9MuQqByWhWU04Cj5nBIwP0XT5WAZz2muC9tN+KKRG9sXhb9WHF14oDc7N+f9zm7hh7mUxRDwgSLuVKiX0VEj9shDaU5qhtHP2jr7c8d2floyVRjnpGaoTktRVhJxIJ5QrMDC7kqR6/Nmbk="
+    secure: "eXrgElavEyC6Q+ujRdlTNQgsFCyyKSwrZv4pZ3viFTl8M77pcVWApP+cKR3Zu8SrVXI+DqrPcz5bH1zmIWcP18OFStGnBgTnj48r1v5K2kbQ6AVXH+j/yghp4a9fHs+Y25uyJFKFdUhF4VnnwEXJDKUdcEe0dx2Q6udMrWo0H3PVunFk3dGcjXAHwKOpz2PJEAX0rL3XOE1c60rrJRVK7kechnmHCQYkrZdQuHRlRKd1WQItEgLI0hTr0KLEy6ZpmT1leP0EeKHmvniqf3ZV2W5CWububGSyEyKNH7TBfq2swmD4TrLtJkZMng6CFz9o8RcPuz1ppo0GQbBXKXjSe6Unnr2PaziIhdm+2KWgS0+tzqJ0bL6fJR0eRDtAr4Bw6dLxY8GdNqVDUh6H4o3pEaSwxYB0OFaeBa9XdaUPaidXyK9xEevCOevY60a5xkueGXbr3JDViajS3hSg6S0jHuhRSvG8bwLO/jAduvNGqCELdjIJ+WBZ5jCs6wHe6JABLgoQ47a/USsMNwAhEz5LapaxeiuiaNltFG3kn3u396/g9DGTgYuCkMMdyW4YVJYzK0DiXWQIWHUCANzNu8gV9OOh1toy7uEgTFazim6nHROXVs0dpFBc0GG08Gh7gR0wuqHIXjHZWobCnMkoUl0PvNRahubabM4AiX96MRoT7zM="
 
 notifications:
   email: false
