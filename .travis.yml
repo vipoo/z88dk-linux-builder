@@ -40,7 +40,6 @@ before_script:
   - export ZCCCFG=`pwd`/lib/config
   - ulimit -c unlimited -S       # enable core
   - export BUILD_SDCC=1
-  - chmod 777 build.sh
 
 script:
   - cd z88dk && ./build.sh -e -t
