@@ -1,0 +1,59 @@
+sudo: false
+
+git:
+  submodules: false
+
+cache:
+  directories:
+  - ~/perl5/
+  - ~/.ccache
+
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - dos2unix
+            - libboost-all-dev
+            - texinfo
+            - texi2html
+            - gdb
+      env:
+         - MATRIX_EVAL="CC=gcc && CXX=g++"
+
+before_install:
+  # Use sed to replace the SSH URL with the public URL, then initialize submodules
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
+    # other dependencies
+  - eval "${MATRIX_EVAL}"
+  - cpanm --local-lib=~/perl5 local::lib App::Prove Modern::Perl Capture::Tiny Capture::Tiny::Extended Path::Tiny File::Path Template Template::Plugin::YAML Test::Differences Text::Table CPU::Z80::Assembler Test::Cmd::Common Test::HexDifferences Data::HexDump Object::Tiny::RW Regexp::Common List::Uniq Clone
+  - eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+
+before_script:
+  - export PATH=`pwd`/bin:$PATH
+  - export ZCCCFG=`pwd`/lib/config
+  - ulimit -c unlimited -S       # enable core
+
+script:
+  - cd z88dk && ./build.sh -e -t
+
+before_deploy:
+  - tar -czf /tmp/z88dk-${TRAVIS_TAG}.tar.gz ./z88dk
+
+deploy:
+  provider: releases
+  file: /tmp/z88dk-${TRAVIS_TAG}.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true
+  api-key:
+    secure: "guy/dCA9ptTDinZX0BuPJEE+/8YutsBins1J4k9ghc3/KuRRRBXdq85xJeQFXX9+7xYdSyYgTM9/tOHLTSZ4mUDlu/YdrnnyMMPS23rFvwOPIV0sWdp/vAN216oK0VsjOXn54CPRzE8LcdcQJYNDc8f6XQlBbzMIjfcCPANioNoRHi+9vkdlcIeokB/qIsg+N7SUv4Wcw1dn5WsbLsUrhnWpdoqzLM1ZuHRiYMp+HBIT4VRBC2qO38F2S2VSXKf4+6wo8TOmA0oMeqkQN52Fp/ZTgfxv2bJ3VOPiAFdCXpJCk86ZbLeMixlTcmzHJIKrB/va3IHzxuJjUbjq+Fgcg/MqIbGFjIqJm9F/yuibRjMvSzjcAltZBeLZKGCx7A01VpsERzSUcj+NkSaarA4gtT2ctEwNnv4BnyV2B74+nNraIHsmx8fzvrr709oFIBfKN+/P2Fs/e2lFiQZ3D7lZRBuYYfeIOFpZxHQnvImzJr8HzU6bD25Ee5E7tBkwE27+OPeZn9vxGAzrqnBIEp2R6W0PMol4I9MuQqByWhWU04Cj5nBIwP0XT5WAZz2muC9tN+KKRG9sXhb9WHF14oDc7N+f9zm7hh7mUxRDwgSLuVKiX0VEj9shDaU5qhtHP2jr7c8d2floyVRjnpGaoTktRVhJxIJ5QrMDC7kqR6/Nmbk="
+
+notifications:
+  email: false
