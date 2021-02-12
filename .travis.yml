@@ -43,7 +43,7 @@ before_script:
   - export BUILD_SDCC=1
 
 script:
-  - cd z88dk && ./build.sh -e -t
+  - cd z88dk && ./build.sh -e
 
 before_deploy:
   - tar -czf /tmp/z88dk-${TRAVIS_TAG}.tar.gz .
