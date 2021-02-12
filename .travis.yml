@@ -23,6 +23,7 @@ matrix:
             - texinfo
             - texi2html
             - gdb
+            - ragel
       env:
          - MATRIX_EVAL="CC=gcc && CXX=g++"
 
